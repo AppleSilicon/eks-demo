@@ -65,19 +65,19 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
-
+    # ami_type = "AL2_x86_64"
+    ami_type = "AL2023_ARM_64_STANDARD"
   }
 
   eks_managed_node_groups = {
     one = {
       name = "node-group-1"
 
-      instance_types = ["t3.small"]
+      instance_types = ["t4g.small"]
 
       min_size     = 1
       max_size     = 3
-      desired_size = 2
+      desired_size = 1
     }
   }
 }

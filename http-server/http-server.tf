@@ -1,12 +1,18 @@
 # main.tf
 provider "kubernetes" {
-  config_path = "~/.kube/config"  # Adjust this path if necessary
+  config_path = "~/.kube/config"
+}
+
+resource "kubernetes_namespace" "eks-demo" {
+  metadata {
+    name = "eks-demo"
+  }
 }
 
 resource "kubernetes_deployment" "http_server" {
   metadata {
     name      = "http-server"
-    namespace = "default"  # Change to your desired namespace
+    namespace = "eks-demo"
   }
 
   spec {
@@ -28,7 +34,7 @@ resource "kubernetes_deployment" "http_server" {
       spec {
         container {
           name  = "http-server"
-          image = "653418259700.dkr.ecr.ap-east-1.amazonaws.com/heals/ecr:latest"
+          image = "653418259700.dkr.ecr.ap-east-1.amazonaws.com/demo/ecr:latest"
 
           port {
             container_port = 80
@@ -42,7 +48,7 @@ resource "kubernetes_deployment" "http_server" {
 resource "kubernetes_service" "http_server" {
   metadata {
     name      = "http-server"
-    namespace = "default"  # Change to your desired namespace
+    namespace = "eks-demo"
   }
 
   spec {

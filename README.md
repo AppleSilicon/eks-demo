@@ -51,7 +51,7 @@ aws ecr get-login-password --region ap-east-1 | docker login --username AWS --pa
 
 ```
 cd ../http-server
-docker buildx build --platform=linux/arm64 -t demo/ecr:latest .
+docker buildx build . --platform=linux/arm64,linux/amd64 -t demo/ecr:latest
 ```
 
 2. tag and push the Docker image to a ECR

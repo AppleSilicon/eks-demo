@@ -66,17 +66,29 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     # ami_type = "AL2_x86_64"
-    ami_type = "AL2023_ARM_64_STANDARD"
+    # ami_type = "AL2023_ARM_64_STANDARD"
   }
 
   eks_managed_node_groups = {
     one = {
-      name = "node-group-1"
+      name = "node-group-ARM_64"
 
       instance_types = ["t4g.small"]
+      ami_type = "AL2023_ARM_64_STANDARD"
 
       min_size     = 1
-      max_size     = 3
+      max_size     = 2
+      desired_size = 1
+    }
+
+    two = {
+      name = "node-group-x86_64"
+
+      instance_types = ["t3.small"]
+      ami_type = "AL2023_x86_64_STANDARD"
+
+      min_size     = 1
+      max_size     = 2
       desired_size = 1
     }
   }
